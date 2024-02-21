@@ -58,5 +58,20 @@
 
     <input type="submit" value="Generate Document">
 </form>
+
+<!-- Hidden download link -->
+<div id="downloadLink" style="display:none;">
+    <a id="downloadButton" th:href="${documentPath}" download="generated_document.docx">
+        <button>Download Document</button>
+    </a>
+</div>
+
+<!-- JavaScript to show download link after form submission -->
+<script>
+    document.getElementById('docForm').addEventListener('submit', function() {
+        // Show the download link once the form is submitted
+        document.getElementById('downloadLink').style.display = 'block';
+    });
+</script>
 </body>
 </html>

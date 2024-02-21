@@ -1,15 +1,13 @@
 package co.wileyedge.docgen;
 
 import org.apache.poi.xwpf.usermodel.*;
-
-import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,18 +15,24 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.UUID;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 @Controller
 public class DocgenApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DocgenApplication.class, args);
-	}
+	private String documentPath;
 
 	@GetMapping("/")
 	public String index() {
+		// Schedule cleanup task to run every 3 minutes
+		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+		executor.scheduleAtFixedRate(this::cleanupUserDataFolder, 0, 3, TimeUnit.MINUTES);
 		return "form"; // This will return the HTML form page
 	}
 
@@ -45,8 +49,8 @@ public class DocgenApplication {
 							   @RequestParam("internship") String internship,
 							   @RequestParam("final_year_project") String finalYearProject,
 							   @RequestParam("personal_project") String personalProject,
-							   @RequestParam("achievements") String achievements
-							   ) {
+							   @RequestParam("achievements") String achievements,
+							   Model model) {
 		try {
 			// Path to the template document
 			File templateFile = new File("src/main/resources/templates/template.docx");
@@ -88,12 +92,24 @@ public class DocgenApplication {
 			document.close();
 
 			System.out.println("New document created successfully: " + newDocumentPath);
+
+			// Set the generated document's path
+			this.documentPath = newDocumentPath.toString();
 		} catch (IOException e) {
 			System.err.println("Error creating document: " + e.getMessage());
-			return "redirect:/"; // Redirect to form page with an error message
+			// Redirect to form page with an error message
+			return "redirect:/";
 		}
 
-		return "redirect:/"; //
+		// Redirect to download page
+		return "redirect:/download";
+	}
+
+	@GetMapping("/download")
+	public String download(Model model) {
+		// Pass the document path to the download page
+		model.addAttribute("documentPath", documentPath);
+		return "download"; // This will return the download HTML page
 	}
 
 	private void replacePlaceholder(XWPFDocument document, String placeholder, String value) {
@@ -108,9 +124,30 @@ public class DocgenApplication {
 		}
 	}
 
+	private void cleanupUserDataFolder() {
+		System.out.println("Running cleanupUserDataFolder()...");
+		File userDataFolder = new File("UserData");
+		if (userDataFolder.exists() && userDataFolder.isDirectory()) {
+			File[] files = userDataFolder.listFiles();
+			if (files != null) {
+				Instant now = Instant.now();
+				for (File file : files) {
+					Instant lastModified = Instant.ofEpochMilli(file.lastModified());
+					Duration elapsedTime = Duration.between(lastModified, now);
+					// Delete files older than 3 minutes (1800000 milliseconds)
+					if (elapsedTime.toMillis() > 1800000) {
+						if (file.delete()) {
+							System.out.println("Deleted file: " + file.getName());
+						} else {
+							System.err.println("Failed to delete file: " + file.getName());
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		SpringApplication.run(DocgenApplication.class, args);
+	}
 }
-
-
-
-
-
