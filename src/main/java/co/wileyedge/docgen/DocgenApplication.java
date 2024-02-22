@@ -8,6 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -100,17 +105,20 @@ public class DocgenApplication {
 			// Redirect to form page with an error message
 			return "redirect:/";
 		}
-
 		// Redirect to download page
 		return "redirect:/download";
 	}
 
 	@GetMapping("/download")
-	public String download(Model model) {
+	public ResponseEntity<Resource> download(Model model) {
 		// Pass the document path to the download page
-		model.addAttribute("documentPath", documentPath);
-		return "download"; // This will return the download HTML page
+		Resource resource = new FileSystemResource(documentPath);
+		String fileName = documentPath.substring(documentPath.lastIndexOf("/") + 1); // Extracting file name from path
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+				.body(resource);
 	}
+
 
 	private void replacePlaceholder(XWPFDocument document, String placeholder, String value) {
 		for (XWPFParagraph paragraph : document.getParagraphs()) {
