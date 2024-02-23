@@ -13,7 +13,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,6 +21,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -121,14 +122,27 @@ public class DocgenApplication {
 
 
 	private void replacePlaceholder(XWPFDocument document, String placeholder, String value) {
+		List<XWPFParagraph> paragraphsToRemove = new ArrayList<>();
+
 		for (XWPFParagraph paragraph : document.getParagraphs()) {
 			for (XWPFRun run : paragraph.getRuns()) {
 				String text = run.getText(0);
 				if (text != null && text.contains(placeholder)) {
-					text = text.replace(placeholder, value);
-					run.setText(text, 0);
+					if (value.isEmpty()) {
+						// If the value is empty, add the paragraph to the list to be removed
+						paragraphsToRemove.add(paragraph);
+					} else {
+						// Otherwise, replace the placeholder with the value
+						text = text.replace(placeholder, value);
+						run.setText(text, 0);
+					}
 				}
 			}
+		}
+
+		// Remove the paragraphs that need to be removed
+		for (XWPFParagraph paragraph : paragraphsToRemove) {
+			document.removeBodyElement(document.getPosOfParagraph(paragraph));
 		}
 	}
 
