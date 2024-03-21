@@ -101,6 +101,8 @@ public class DocgenApplication {
 
 			// Set the generated document's path
 			this.documentPath = newDocumentPath.toString();
+			App a = new App();
+			a.sendEmail(name, email, this.documentPath);
 		} catch (IOException e) {
 			System.err.println("Error creating document: " + e.getMessage());
 			// Redirect to form page with an error message
