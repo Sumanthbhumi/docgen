@@ -1,3 +1,4 @@
+/*
 
 .preview-container {
     padding: 20px;
@@ -7,7 +8,9 @@
 }
 
 .preview-container p {
-    margin: 0; /* Remove default margins for paragraphs */
+    margin: 0; */
+/* Remove default margins for paragraphs *//*
+
 }
 
 .preview-container strong {
@@ -15,11 +18,15 @@
 }
 
 .preview-container span {
-    color: #000; /* Default color for text */
+    color: #000; */
+/* Default color for text *//*
+
 }
 
 .preview-container span:first-child {
-    color: #115C36; /* Color for specific spans */
+    color: #115C36; */
+/* Color for specific spans *//*
+
 }
 
 .preview-container hr {
@@ -28,3 +35,4 @@
     margin-top: 5px;
     margin-bottom: 5px;
 }
+*/
