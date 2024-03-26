@@ -1,3 +1,4 @@
+
 // JavaScript code to update the preview section with filled content
 const previewContainer = document.getElementById('preview_content');
 
@@ -47,6 +48,21 @@ function updatePreview() {
     // Update the content of the preview container with the filled content
     previewContainer.innerHTML = filledContent;
 }
+const currentYear = new Date().getFullYear(); // Corrected the method call to getFullYear()
+
+// Function to populate year options
+function populateYearOptions(selectElement, startYear, endYear) {
+    for (let year = startYear; year <= endYear; year++) {
+        const option = document.createElement('option');
+        option.value = year;
+        option.text = year;
+        selectElement.add(option);
+    }
+}
+
+// Call populateYearOptions to fill year options for education start and end
+populateYearOptions(document.getElementById('educationStart'), currentYear - 50, currentYear); // Adjusted start year if needed
+populateYearOptions(document.getElementById('educationEndYearField'), currentYear - 50, currentYear); // Adjusted start year if needed
 
 
 // Listen for input events on the input fields and update the preview accordingly

@@ -51,6 +51,10 @@ public class DocgenApplication {
 							   @RequestParam("languages") String languages,
 							   @RequestParam("technologies") String technologies,
 							   @RequestParam("education") String education,
+							   @RequestParam("education_start_month") String educationStartMonth,
+							   @RequestParam("educationStart") String educationStartYear,
+							   @RequestParam("education_end_month") String educationEndMonth,
+							   @RequestParam("education_end_year") String educationEndYear,
 							   @RequestParam("software_engineer") String softwareEngineer,
 							   @RequestParam("internship") String internship,
 							   @RequestParam("final_year_project") String finalYearProject,
@@ -84,6 +88,8 @@ public class DocgenApplication {
 			replacePlaceholder(document, "userSummary", summary);
 			replacePlaceholder(document, "userKnownLanguages", languages);
 			replacePlaceholder(document, "userKnownTechnologies", technologies);
+			replacePlaceholder(document, "userEducationStart", educationStartMonth + " " + educationStartYear);
+			replacePlaceholder(document, "userEducationEnd", educationEndMonth + " " + educationEndYear);
 			replacePlaceholder(document, "userEducation", education);
 			replacePlaceholder(document, "userSoftwareEngineer", softwareEngineer);
 			replacePlaceholder(document, "userInternship", internship);
@@ -101,8 +107,8 @@ public class DocgenApplication {
 
 			// Set the generated document's path
 			this.documentPath = newDocumentPath.toString();
-			App a = new App();
-			a.sendEmail(name, email, this.documentPath);
+//			App a = new App();
+//			a.sendEmail(name, email, this.documentPath);
 		} catch (IOException e) {
 			System.err.println("Error creating document: " + e.getMessage());
 			// Redirect to form page with an error message
