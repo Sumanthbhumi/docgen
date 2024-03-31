@@ -2,6 +2,15 @@
 // JavaScript code to update the preview section with filled content
 const previewContainer = document.getElementById('preview_content');
 
+
+
+
+
+
+
+
+
+
 // Function to update the preview
 function updatePreview() {
     // Get all the input values
@@ -12,6 +21,42 @@ function updatePreview() {
     const summary = document.getElementById('summaryField').value;
     const languages = document.getElementById('languagesField').value;
     const technologies = document.getElementById('technologiesField').value;
+    const education = document.getElementById('educationField').value;
+    const educationStartMonth = document.getElementById('educationStartMonthField').value;
+    const educationStartYear = document.getElementById('educationStart').value;
+    const educationEndMonth = document.getElementById('educationEndMonthField').value;
+    const educationEndYear = document.getElementById('educationEndYearField').value;
+    const softwareEngineer = document.getElementById('softwareEngineerField').value;
+    const internship = document.getElementById('internshipField').value;
+    const finalYearProject = document.getElementById('finalYearProjectField').value;
+    const personalProject = document.getElementById('personalProjectField').value;
+    const achievements = document.getElementById('achievementsField').value;
+
+
+
+
+
+
+
+
+
+
+
+
+// Function to update the preview
+function updatePreview() {
+    // Get all the input values
+    const email = document.getElementById('emailField').value;
+    const phoneNumber = document.getElementById('phoneNumberField').value;
+    const name = document.getElementById('nameField').value;
+    const linkedin = document.getElementById('linkedinField').value;
+    const summary = document.getElementById('summaryField').value;
+    const languages = document.getElementById('languagesField').value;
+    const technologies = document.getElementById('technologiesField').value;
+    const educationStartMonth = document.getElementById('educationStartMonthField').value;
+    const educationStartYear = document.getElementById('educationStart').value;
+    const educationEndMonth = document.getElementById('educationEndMonthField').value;
+    const educationEndYear = document.getElementById('educationEndYearField').value;
     const education = document.getElementById('educationField').value;
     const softwareEngineer = document.getElementById('softwareEngineerField').value;
     const internship = document.getElementById('internshipField').value;
@@ -34,7 +79,7 @@ function updatePreview() {
             <p><span style="color: #115C36;">Languages:</span> <span style="color: #000;">${languages}</span></p>
             <p><span style="color: #115C36;">Technologies Tools:</span> <span style="color: #000;">${technologies}</span></p>
             <p><strong style="font-size: 16px; font-family: 'Open Sans ExtraBold', sans-serif; color: #115C36;">EDUCATION</strong></p>
-            <p><span style="color: #000;">${education}</span></p>
+            <p><span style="color: #115C36;">${educationStartMonth} - ${educationStartYear} - ${educationEndMonth}-${educationEndYear} - ${education}</span></p>
             <p><strong style="font-size: 16px; font-family: 'Open Sans ExtraBold', sans-serif; color: #115C36;">EXPERIENCE</strong></p>
             <p><span style="color: #115C36;">Software Engineer</span><span style="color: #000;"> – ${softwareEngineer}</span></p>
             <p><span style="color: #115C36;">Internship</span><span style="color: #000;">  – ${internship}</span></p>
@@ -48,6 +93,23 @@ function updatePreview() {
     // Update the content of the preview container with the filled content
     previewContainer.innerHTML = filledContent;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const currentYear = new Date().getFullYear(); // Corrected the method call to getFullYear()
 
 // Function to populate year options
