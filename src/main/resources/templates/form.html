@@ -70,27 +70,58 @@
             margin-bottom: 20px; /* Add some bottom margin for spacing */
         }
         .timer {
-          display: flex;
-          justify-content: space-between; /* Move items to the edges with space in between */
-        }
+  display: flex;
+  justify-content: space-between; /* Move items to the edges with space in between */
+}
 
-        .timer select {
-          border: 1px solid #ccc;
-          padding: 1rem, 0, 1rem, 0;
-          background-color: #fff;
-          font-size: 12px;
-          outline: none;
-          transition: border-color 0.3s ease;
-        }
+.timer select {
+  border: 1px solid #ccc;
+  padding: 1rem, 0, 1rem, 0;
+  background-color: #fff;
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
 
-        .timer select:hover {
-          border-color: #007bff; /* Change border color on hover */
-        }
+.timer select:hover {
+  border-color: #007bff; /* Change border color on hover */
+}
 
-        .timer select:focus {
-          border-color: #007bff; /* Change border color on focus */
-          box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Add focus outline */
-        }
+.timer select:focus {
+  border-color: #007bff; /* Change border color on focus */
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Add focus outline */
+}
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
     </style>
 </head>
 <body>
@@ -99,6 +130,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
+                <!-- Personal Information -->
                 <h3>Personal Information</h3>
 
                 <div class="form-group">
@@ -163,18 +195,18 @@
                         <div class="d-flex">
                             <select id="educationStartMonthField" name="education_start_month" class="form-control me-2" required>
                                 <option value="">Month</option>
-                                <option value="January">January</option>
-                                <option value="February">February</option>
-                                <option value="March">March</option>
-                                <option value="April">April</option>
-                                <option value="May">May</option>
-                                <option value="June">June</option>
-                                <option value="July">July</option>
-                                <option value="August">August</option>
-                                <option value="September">September</option>
-                                <option value="October">October</option>
-                                <option value="November">November</option>
-                                <option value="December">December</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
                             </select>
                             <select id="educationStart" name="educationStart" class="form-control" required>
                                 <option value="">Year</option>
@@ -187,31 +219,30 @@
                         <label>Ended:</label><br>
                         <div class="d-flex">
                             <select id="educationEndMonthField" name="education_end_month" class="form-control" required>                                <option value="">Month</option>
-                                <option value="January">January</option>
-                                <option value="February">February</option>
-                                <option value="March">March</option>
-                                <option value="April">April</option>
-                                <option value="May">May</option>
-                                <option value="June">June</option>
-                                <option value="July">July</option>
-                                <option value="August">August</option>
-                                <option value="September">September</option>
-                                <option value="October">October</option>
-                                <option value="November">November</option>
-                                <option value="December">December</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                                <!-- Add more options for the remaining months -->
                             </select>
                             <select id="educationEndYearField" name="education_end_year" class="form-control" required>
                                 <option value="">Year</option>
+                                <!-- Add options for years dynamically using JavaScript -->
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="educationField">Education<span class="required"></span>:</label><br>
                     <textarea id="educationField" name="education" class="form-control" placeholder="Enter Here" required></textarea><br>
-                </div>
-                <div class="form-group">
-                    <label for="secondaryEducation"></label>
-                    <textarea id="secondaryEducation" name="secondaryEducation" class="form-control" placeholder="lower education" required></textarea><br>
                 </div>
 
                 <div class="form-group">
@@ -257,24 +288,33 @@
             return email.endsWith("@" + domain);
         });
 
+        // Reset previous error messages
         emailError.textContent = "";
         document.getElementById("phoneNumberError").textContent = "";
 
         if (!valid) {
             emailError.textContent = "Please enter a valid email address";
             event.preventDefault();
+            // Scroll to email field
             document.getElementById("emailField").scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Focus on email field
             document.getElementById("emailField").focus();
         }
 
         if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
             document.getElementById("phoneNumberError").textContent = "Please enter a valid 10-digit phone number.";
             event.preventDefault();
+            // Scroll to phone number field
             document.getElementById("phoneNumberField").scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Focus on phone number field
             document.getElementById("phoneNumberField").focus();
         }
     });
 </script>
+
 <script src="js/script.js"></script>
+
+<!-- Bootstrap JS -->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>-->
 </body>
 </html>

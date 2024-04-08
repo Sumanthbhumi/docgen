@@ -55,7 +55,6 @@ public class DocgenApplication {
 							   @RequestParam("educationStart") String educationStartYear,
 							   @RequestParam("education_end_month") String educationEndMonth,
 							   @RequestParam("education_end_year") String educationEndYear,
-							   @RequestParam("secondaryEducation") String secondaryEducation,
 							   @RequestParam("software_engineer") String softwareEngineer,
 							   @RequestParam("internship") String internship,
 							   @RequestParam("final_year_project") String finalYearProject,
@@ -92,7 +91,6 @@ public class DocgenApplication {
 			replacePlaceholder(document, "userEducationStart", educationStartMonth + " " + educationStartYear);
 			replacePlaceholder(document, "userEducationEnd", educationEndMonth + " " + educationEndYear);
 			replacePlaceholder(document, "userEducation", education);
-			replacePlaceholder(document, "userSecondary", secondaryEducation);
 			replacePlaceholder(document, "userSoftwareEngineer", softwareEngineer);
 			replacePlaceholder(document, "userInternship", internship);
 			replacePlaceholder(document, "userFinalYearProject", finalYearProject);
@@ -150,7 +148,7 @@ public class DocgenApplication {
 			}
 		}
 
-		// Remove the paragraphs that are empty
+		// Remove the paragraphs that need to be removed
 		for (XWPFParagraph paragraph : paragraphsToRemove) {
 			document.removeBodyElement(document.getPosOfParagraph(paragraph));
 		}
