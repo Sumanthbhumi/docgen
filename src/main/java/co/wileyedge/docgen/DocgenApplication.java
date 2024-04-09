@@ -1,17 +1,19 @@
 package co.wileyedge.docgen;
 
-import org.apache.poi.xwpf.usermodel.*;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,6 +57,11 @@ public class DocgenApplication {
 							   @RequestParam("educationStart") String educationStartYear,
 							   @RequestParam("education_end_month") String educationEndMonth,
 							   @RequestParam("education_end_year") String educationEndYear,
+							   @RequestParam("education_start_month_2") String educationStartMonth2,
+							   @RequestParam("educationStart2") String educationStartYear2,
+							   @RequestParam("education_end_month_2") String educationEndMonth2,
+							   @RequestParam("education_end_year_2") String educationEndYear2,
+							   @RequestParam("secondaryEducation") String secondaryEducation,
 							   @RequestParam("software_engineer") String softwareEngineer,
 							   @RequestParam("internship") String internship,
 							   @RequestParam("final_year_project") String finalYearProject,
@@ -91,6 +98,9 @@ public class DocgenApplication {
 			replacePlaceholder(document, "userEducationStart", educationStartMonth + " " + educationStartYear);
 			replacePlaceholder(document, "userEducationEnd", educationEndMonth + " " + educationEndYear);
 			replacePlaceholder(document, "userEducation", education);
+			replacePlaceholder(document, "userSecondaryEducationStart", educationStartMonth2 + " " + educationStartYear2);
+			replacePlaceholder(document, "educationEnd", educationEndMonth2 + " " + educationEndYear2);
+			replacePlaceholder(document, "userSecondaryEducation", secondaryEducation);
 			replacePlaceholder(document, "userSoftwareEngineer", softwareEngineer);
 			replacePlaceholder(document, "userInternship", internship);
 			replacePlaceholder(document, "userFinalYearProject", finalYearProject);
@@ -107,8 +117,8 @@ public class DocgenApplication {
 
 			// Set the generated document's path
 			this.documentPath = newDocumentPath.toString();
-//			App a = new App();
-//			a.sendEmail(name, email, this.documentPath);
+//			Email mailTo = new Email();
+//			mailTo.sendEmail(name, email, this.documentPath);
 		} catch (IOException e) {
 			System.err.println("Error creating document: " + e.getMessage());
 			// Redirect to form page with an error message
@@ -147,6 +157,7 @@ public class DocgenApplication {
 				}
 			}
 		}
+
 
 		// Remove the paragraphs that need to be removed
 		for (XWPFParagraph paragraph : paragraphsToRemove) {

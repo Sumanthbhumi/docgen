@@ -12,10 +12,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.PasswordAuthentication;
 
-public class App {
+public class Email {
 
     private boolean emailSent = false;
-    private int maxAttempts = 1; // Maximum number of attempts to send email
     private int attempts = 0; // Current attempt count
 
     // Function to send mail
@@ -27,6 +26,8 @@ public class App {
             return;
         }
 
+        // Maximum number of attempts to send email
+        int maxAttempts = 1;
         while (attempts < maxAttempts) {
             try {
                 String from = "bhumisumanth401@outlook.com";
@@ -67,7 +68,6 @@ public class App {
                 m.setSubject(sub);
 
                 // attach the file
-                String path = filepath;
 
                 MimeMultipart mimeMultipart = new MimeMultipart();
 
@@ -77,7 +77,7 @@ public class App {
 
                 // adding mail body
                 textMime.setText(message);
-                File file = new File(path);
+                File file = new File(filepath);
                 fileMime.attachFile(file);
 
                 mimeMultipart.addBodyPart(textMime);
