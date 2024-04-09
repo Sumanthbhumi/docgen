@@ -20,9 +20,8 @@
             max-height: calc(100vh - 50px); /* Limit height to viewport height minus header and footer */
         }
 
-        /* Custom CSS for professional information */
         .professional-info {
-            margin-top: 20px; /* Add some margin between personal and professional info */
+            margin-top: 20px;
         }
 
         .required::after {
@@ -30,13 +29,12 @@
             color: red;
         }
 
-        /* Improved Form Field Styling */
         .form-control {
-            border: 1px solid #ced4da; /* Add border to form fields */
-            border-radius: 4px; /* Rounded corners */
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            margin-bottom: 20px;
         }
 
-        /* Inline Error Messages */
         .error-message {
             color: red;
             font-size: 0.8em;
@@ -44,18 +42,32 @@
 
         /* Button Styling */
         .btn-primary {
-            background-color: #007bff; /* Blue background color */
-            color: #fff; /* White text color */
+            background-color: #007bff;
+            color: #fff;
             border: none;
-            padding: 10px 20px; /* Increase padding */
+            padding: 10px 20px;
             font-size: 1em;
             border-radius: 4px;
-            transition: background-color 0.3s ease; /* Smooth transition */
+            transition: background-color 0.3s ease;
         }
 
         .btn-primary:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+            background-color: #0056b3;
         }
+
+        .btn-success {
+            font-size: 1em;
+            background-color: #28a745;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
 
         /* Typography */
         body {
@@ -68,36 +80,41 @@
             /*padding: 0, 10px, 0, 10px;*/
             display: flex;
             flex-direction: column;
-            margin-bottom: 20px;
+            justify-content: space-evenly;
+            /*margin-bottom: 20px;*/
         }
 
 
-        /* Spacing between form fields */
+        Spacing between form fields
         .form-group {
             margin-bottom: 20px;
         }
         .timer {
-          display: flex;
-          justify-content: space-between;
-          margin-bottom: -2rem;
+            display: flex;
+            justify-content: space-between;
+            /*margin-bottom: -2rem;*/
         }
 
         .timer select {
-          border: 1px solid #ccc;
-          background-color: #fff;
-          font-size: 12px;
-          outline: none;
-          transition: border-color 0.3s ease;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-size: 12px;
+            outline: none;
+            transition: border-color 0.3s ease;
         }
 
         .timer select:hover {
-          border-color: #007bff;
+            border-color: #007bff;
         }
 
         .timer select:focus {
-          border-color: #007bff;
-          box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
         }
+        .container {
+            margin-bottom: 40px; /* Add margin below the form */
+        }
+
     </style>
 </head>
 <body>
@@ -209,59 +226,67 @@
                                 </select>
                             </div>
                         </div>
-
                     </div>
                     <div class="form-group">
                         <label for="educationField"></label><br>
                         <textarea id="educationField" name="education" class="form-control" placeholder="Highest Education" required></textarea>
                     </div>
                     <div class="timer">
-                        <label for="educationField"></label><br>
-                        <div class="d-flex">
-                            <select id="educationStartMonthField2" name="education_start_month_2" class="form-control me-2" required>
-                                <option value="">Month</option>
-                                <option value="01">January</option>
-                                <option value="02">February</option>
-                                <option value="03">March</option>
-                                <option value="04">April</option>
-                                <option value="05">May</option>
-                                <option value="06">June</option>
-                                <option value="07">July</option>
-                                <option value="08">August</option>
-                                <option value="09">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-                            </select>
-                            <select id="educationStart2" name="educationStart2" class="form-control me-2" required>
-                                <option value="">Year</option>
-                            </select>
-                            <select id="educationEndMonthField2" name="education_end_month_2" class="form-control me-2" required>
-                                <option value="">Month</option>
-                                <option value="01">January</option>
-                                <option value="02">February</option>
-                                <option value="03">March</option>
-                                <option value="04">April</option>
-                                <option value="05">May</option>
-                                <option value="06">June</option>
-                                <option value="07">July</option>
-                                <option value="08">August</option>
-                                <option value="09">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-                            </select>
-                            <select id="educationEndYearField2" name="education_end_year_2" class="form-control" required>
-                                <option value="">Year</option>
-                                <!-- Add year options here -->
-                            </select>
+                        <label for="educationField">Second Highest Education<span class="required"></span>:</label><br>
+                        <div class="form-group">
+                            <label>Started:</label><br>
+                            <div class="d-flex">
+                                <select id="educationStartMonthField2" name="education_start_month_2" class="form-control me-2" required>
+                                    <option value="">Month</option>
+                                    <option value="01">January</option>
+                                    <option value="02">February</option>
+                                    <option value="03">March</option>
+                                    <option value="04">April</option>
+                                    <option value="05">May</option>
+                                    <option value="06">June</option>
+                                    <option value="07">July</option>
+                                    <option value="08">August</option>
+                                    <option value="09">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                                <select id="educationStart2" name="educationStart2" class="form-control me-2" required>
+                                    <option value="">Year</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Ended:</label><br>
+                            <div class="d-flex">
+                                <select id="educationEndMonthField2" name="education_end_month_2" class="form-control me-2" required>
+                                    <option value="">Month</option>
+                                    <option value="01">January</option>
+                                    <option value="02">February</option>
+                                    <option value="03">March</option>
+                                    <option value="04">April</option>
+                                    <option value="05">May</option>
+                                    <option value="06">June</option>
+                                    <option value="07">July</option>
+                                    <option value="08">August</option>
+                                    <option value="09">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                                <select id="educationEndYearField2" name="education_end_year_2" class="form-control" required>
+                                    <option value="">Year</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="secondaryEducation"></label>
+                        <textarea id="secondaryEducation" name="secondaryEducation" class="form-control" placeholder="Second Highest Education" required></textarea>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="secondaryEducation"></label>
-                    <textarea id="secondaryEducation" name="secondaryEducation" class="form-control" placeholder="Second Highest Education" required></textarea>
-                </div>
+
                 <hr>
 
                 <div class="form-group">
@@ -289,7 +314,8 @@
                     <textarea id="achievementsField" name="achievements" class="form-control" placeholder="Enter Here" required></textarea><br>
                 </div>
                 <div class="container text-center mt-3">
-                    <input type="submit" value="Download CV" class="btn btn-primary btn-lg">
+                    <input type="submit" name="action" value="Download" class="btn btn-primary btn-lg">
+                    <input type="submit" name="action" value="Download and Email" class="btn btn-success btn-lg">
                 </div>
             </div>
         </div>

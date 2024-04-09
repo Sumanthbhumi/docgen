@@ -30,14 +30,13 @@ public class Email {
         int maxAttempts = 1;
         while (attempts < maxAttempts) {
             try {
-                String from = "bhumisumanth401@outlook.com";
-                String password = "Kishore@123";
+                String from = ""; //tried with outlook working fine
+                String password = "";
                 System.out.println(username);
                 String host = "outlook.office365.com";
                 Properties properties = System.getProperties();
                 System.out.print("Properties: " + properties);
 
-                // setting important info to properties
                 // host set
                 properties.put("mail.smtp.host", host);
                 properties.put("mail.smtp.port", "587");
@@ -55,19 +54,14 @@ public class Email {
                 session.setDebug(true);
 
                 // compose message
-                String message = "\tDear " + username + ",\n\tThanks for using our services!!!\n\tHere is Your resume...";
-                String sub = "\nYour Resume is here";
+                String message = "\tDear " + username + ",\n\tThanks for using our services!!!\n\tHere is Your CV...";
+                String sub = "\nYour CV is here";
 
                 MimeMessage m = new MimeMessage(session);
 
                 m.setFrom(from);
-                // adding recipient to message
                 m.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-
-                // adding subject to message
                 m.setSubject(sub);
-
-                // attach the file
 
                 MimeMultipart mimeMultipart = new MimeMultipart();
 
@@ -75,7 +69,7 @@ public class Email {
 
                 MimeBodyPart fileMime = new MimeBodyPart();
 
-                // adding mail body
+                // add mail body
                 textMime.setText(message);
                 File file = new File(filepath);
                 fileMime.attachFile(file);

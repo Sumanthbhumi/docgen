@@ -35,6 +35,8 @@ import java.util.concurrent.TimeUnit;
 public class DocgenApplication {
 
 	private String documentPath;
+	private String name;
+	private String mail;
 
 	@GetMapping("/")
 	public String index() {
@@ -67,6 +69,7 @@ public class DocgenApplication {
 							   @RequestParam("final_year_project") String finalYearProject,
 							   @RequestParam("personal_project") String personalProject,
 							   @RequestParam("achievements") String achievements,
+							   @RequestParam("action") String action,
 							   Model model) {
 		try {
 			// Path to the template document
@@ -77,7 +80,7 @@ public class DocgenApplication {
 
 			// Generate unique file name for the new document
 			UUID uuid = UUID.randomUUID();
-			String fileName = "user_" + uuid.toString() + ".docx";
+			String fileName = "Docx" + uuid + ".docx";
 
 			// Path to the new document
 			Path newDocumentPath = Paths.get(directoryPath, fileName);
@@ -117,22 +120,34 @@ public class DocgenApplication {
 
 			// Set the generated document's path
 			this.documentPath = newDocumentPath.toString();
-//			Email mailTo = new Email();
-//			mailTo.sendEmail(name, email, this.documentPath);
+			this.name = name;
+			this.mail = email;
+
 		} catch (IOException e) {
 			System.err.println("Error creating document: " + e.getMessage());
 			// Redirect to form page with an error message
 			return "redirect:/";
 		}
-		// Redirect to download page
-		return "redirect:/download";
+		if (action.equals("Download")) {
+			return "redirect:/download";
+		}
+		return "redirect:/downloadAndMail";
 	}
 
+	@GetMapping("/downloadAndMail")
+	public ResponseEntity<Resource> downloadAndMail(Model model) {
+		Email mailTo = new Email();
+		mailTo.sendEmail(this.name, this.mail, this.documentPath);
+		Resource resource = new FileSystemResource(documentPath);
+		String fileName = documentPath.substring(documentPath.lastIndexOf("/") + 1);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+				.body(resource);
+	}
 	@GetMapping("/download")
 	public ResponseEntity<Resource> download(Model model) {
-		// Pass the document path to the download page
 		Resource resource = new FileSystemResource(documentPath);
-		String fileName = documentPath.substring(documentPath.lastIndexOf("/") + 1); // Extracting file name from path
+		String fileName = documentPath.substring(documentPath.lastIndexOf("/") + 1);
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
 				.body(resource);
