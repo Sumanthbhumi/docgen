@@ -10,7 +10,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,7 +42,7 @@ public class DocgenApplication {
 		// Schedule cleanup task to run every 3 minutes
 		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 		executor.scheduleAtFixedRate(this::cleanupUserDataFolder, 0, 3, TimeUnit.MINUTES);
-		return "form"; // This will return the HTML form page
+		return "form";
 	}
 
 	@PostMapping("/generateDocx")
@@ -69,23 +68,20 @@ public class DocgenApplication {
 							   @RequestParam("final_year_project") String finalYearProject,
 							   @RequestParam("personal_project") String personalProject,
 							   @RequestParam("achievements") String achievements,
-							   @RequestParam("action") String action,
-							   Model model) {
+							   @RequestParam("action") String action) {
 		try {
 			// Path to the template document
 			File templateFile = new File("src/main/resources/templates/template.docx");
 
 			// Path to the new document directory
-			String directoryPath = "UserData";
+			String directoryPath = "CV_Builder";
 
 			// Generate unique file name for the new document
 			UUID uuid = UUID.randomUUID();
-			String fileName = "Docx" + uuid + ".docx";
+			String fileName = name + uuid + ".docx";
 
 			// Path to the new document
 			Path newDocumentPath = Paths.get(directoryPath, fileName);
-
-			// Load the template document
 			FileInputStream fis = new FileInputStream(templateFile);
 			XWPFDocument document = new XWPFDocument(fis);
 			fis.close();
@@ -135,19 +131,20 @@ public class DocgenApplication {
 	}
 
 	@GetMapping("/downloadAndMail")
-	public ResponseEntity<Resource> downloadAndMail(Model model) {
+	public ResponseEntity<Resource> downloadAndMail() {
 		Email mailTo = new Email();
 		mailTo.sendEmail(this.name, this.mail, this.documentPath);
 		Resource resource = new FileSystemResource(documentPath);
-		String fileName = documentPath.substring(documentPath.lastIndexOf("/") + 1);
+		String fileName = documentPath.substring(documentPath.lastIndexOf(File.separator) + 1); // Get only the filename
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
 				.body(resource);
 	}
+
 	@GetMapping("/download")
-	public ResponseEntity<Resource> download(Model model) {
+	public ResponseEntity<Resource> download() {
 		Resource resource = new FileSystemResource(documentPath);
-		String fileName = documentPath.substring(documentPath.lastIndexOf("/") + 1);
+		String fileName = documentPath.substring(documentPath.lastIndexOf(File.separator) + 1); // Get only the filename
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
 				.body(resource);
@@ -182,7 +179,7 @@ public class DocgenApplication {
 
 	private void cleanupUserDataFolder() {
 		System.out.println("Running cleanupUserDataFolder()...");
-		File userDataFolder = new File("UserData");
+		File userDataFolder = new File("CV_Builder");
 		if (userDataFolder.exists() && userDataFolder.isDirectory()) {
 			File[] files = userDataFolder.listFiles();
 			if (files != null) {

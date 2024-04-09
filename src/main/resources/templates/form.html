@@ -2,23 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Resume Generator Form</title>
+    <title>Wiley CV Builder</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
-        /* Custom CSS for preview content */
-        #preview_content {
-            background-color: #f8f9fa; /* Background color */
-            padding: 20px; /* Padding around the content */
-            border-radius: 8px; /* Rounded corners */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow effect */
-            position: fixed; /* Make the preview section fixed */
-            top: 50px; /* Distance from the top */
-            right: 20px; /* Distance from the right */
-            z-index: 1000; /* Ensure it's above other elements */
-            width: 45%; /* Set a width for the preview section */
-            overflow-y: auto; /* Add scroll bar when content exceeds height */
-            max-height: calc(100vh - 50px); /* Limit height to viewport height minus header and footer */
+
+        body {
+            font-family: Arial, sans-serif; /* Set the default font family */
+            font-size: 16px; /* Set the default font size */
+            line-height: 1.6; /* Set the line height for better readability */
+            background-color: #f8f9fa; /* Set a light background color */
+            color: #333; /* Set the default text color */
+            margin: 20px; /* Remove default margin to prevent unnecessary spacing */
+            padding: 0; /* Remove default padding */
         }
+        #preview_content {
+            background-color: #fff;
+            padding: 30px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 80px;
+            right: 30px;
+            z-index: 1000;
+            width: 45%;
+            overflow-y: auto;
+            overflow-x:hidden;
+            max-height: calc(100vh - 80px);
+            transition: top 0.3s ease-in-out, max-height 0.3s ease-in-out;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+
+        body.scrolled #preview_content {
+            top: 0;
+            max-height: 100vh;
+        }
+
+        h2 {
+            color: #007bff; /* Blue color for the heading */
+            font-size: 28px; /* Larger font size */
+            font-weight: bold; /* Bold font weight */
+            text-transform: uppercase; /* Convert text to uppercase */
+            margin-bottom: 20px; /* Add some bottom margin for spacing */
+            border-bottom: 2px solid #007bff; /* Add an underline effect */
+            padding-bottom: 5px; /* Adjust padding for the underline effect */
+        }
+
 
         .professional-info {
             margin-top: 20px;
@@ -68,39 +100,42 @@
             background-color: #218838;
         }
 
-
-        /* Typography */
         body {
-            font-family: Arial, sans-serif; /* Choose a legible font */
+            font-family: Arial, sans-serif;
             font-size: 16px;
             line-height: 1.6;
         }
 
-        .education-section {
-            /*padding: 0, 10px, 0, 10px;*/
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            /*margin-bottom: 20px;*/
-        }
-
-
-        Spacing between form fields
         .form-group {
             margin-bottom: 20px;
         }
+
+        .education-section {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
         .timer {
             display: flex;
             justify-content: space-between;
-            /*margin-bottom: -2rem;*/
+            align-items: center;
+            margin-bottom: 0;
+        }
+
+        .timer label {
+            margin-right: 10px;
+            font-weight: bold;
         }
 
         .timer select {
             border: 1px solid #ccc;
             background-color: #fff;
-            font-size: 12px;
+            font-size: 14px;
             outline: none;
             transition: border-color 0.3s ease;
+            padding: 5px 10px;
+            margin-right: 5px;
         }
 
         .timer select:hover {
@@ -111,14 +146,15 @@
             border-color: #007bff;
             box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
         }
-        .container {
-            margin-bottom: 40px; /* Add margin below the form */
+
+        .form-group textarea {
+            margin-top: 5px;
         }
 
     </style>
 </head>
 <body>
-<h2 class="text-center my-2">Resume Generator Form</h2>
+<h2 class="text-center my-2">CV Builder </h2>
 <form id="docForm" action="/generateDocx" method="post">
     <div class="container">
         <div class="row">
@@ -149,14 +185,10 @@
                     <div class="error-message" id="linkedinError"></div> <!-- Error message for LinkedIn -->
                 </div>
 
-                <!-- Preview section -->
-                <div id="preview_content">
-                    <h3 class="text-center my-2">Preview</h3>
-                </div>
             </div>
         </div>
     </div>
-
+    <hr>
     <!-- Professional Information -->
     <div class="professional-info container">
         <div class="row">
@@ -177,13 +209,14 @@
                     <label for="technologiesField">Known Technologies<span class="required"></span>:</label><br>
                     <textarea id="technologiesField" name="technologies" class="form-control" placeholder="Enter Here" required></textarea><br>
                 </div>
-                <div class="education-section" name="educationSection">
+                <hr>
+                <div class="education-section">
                     <div class="timer">
-                        <label for="educationField">Education<span class="required"></span>:</label><br>
+                        <label for="educationField" style="padding: 0">Education<span class="required"></span>:</label><br>
                         <div class="form-group">
                             <label>Started:</label><br>
                             <div class="d-flex">
-                                <select id="educationStartMonthField" name="education_start_month" class="form-control me-2" required>
+                                <label for="educationStartMonthField"></label><select id="educationStartMonthField" name="education_start_month" class="form-control me-2" required>
                                     <option value="">Month</option>
                                     <option value="01">January</option>
                                     <option value="02">February</option>
@@ -198,7 +231,7 @@
                                     <option value="11">November</option>
                                     <option value="12">December</option>
                                 </select>
-                                <select id="educationStart" name="educationStart" class="form-control" required>
+                                <label for="educationStart"></label><select id="educationStart" name="educationStart" class="form-control" required>
                                     <option value="">Year</option>
                                 </select>
                             </div>
@@ -207,7 +240,7 @@
                         <div class="form-group">
                             <label>Ended:</label><br>
                             <div class="d-flex">
-                                <select id="educationEndMonthField" name="education_end_month" class="form-control me-2" required>                                <option value="">Month</option>
+                                <label for="educationEndMonthField"></label><select id="educationEndMonthField" name="education_end_month" class="form-control me-2" required>                                <option value="">Month</option>
                                     <option value="01">January</option>
                                     <option value="02">February</option>
                                     <option value="03">March</option>
@@ -221,7 +254,7 @@
                                     <option value="11">November</option>
                                     <option value="12">December</option>
                                 </select>
-                                <select id="educationEndYearField" name="education_end_year" class="form-control" required>
+                                <label for="educationEndYearField"></label><select id="educationEndYearField" name="education_end_year" class="form-control" required>
                                     <option value="">Year</option>
                                 </select>
                             </div>
@@ -236,7 +269,7 @@
                         <div class="form-group">
                             <label>Started:</label><br>
                             <div class="d-flex">
-                                <select id="educationStartMonthField2" name="education_start_month_2" class="form-control me-2" required>
+                                <label for="educationStartMonthField2"></label><select id="educationStartMonthField2" name="education_start_month_2" class="form-control me-2" required>
                                     <option value="">Month</option>
                                     <option value="01">January</option>
                                     <option value="02">February</option>
@@ -251,7 +284,7 @@
                                     <option value="11">November</option>
                                     <option value="12">December</option>
                                 </select>
-                                <select id="educationStart2" name="educationStart2" class="form-control me-2" required>
+                                <label for="educationStart2"></label><select id="educationStart2" name="educationStart2" class="form-control me-2" required>
                                     <option value="">Year</option>
                                 </select>
                             </div>
@@ -260,7 +293,7 @@
                         <div class="form-group">
                             <label>Ended:</label><br>
                             <div class="d-flex">
-                                <select id="educationEndMonthField2" name="education_end_month_2" class="form-control me-2" required>
+                                <label for="educationEndMonthField2"></label><select id="educationEndMonthField2" name="education_end_month_2" class="form-control me-2" required>
                                     <option value="">Month</option>
                                     <option value="01">January</option>
                                     <option value="02">February</option>
@@ -275,7 +308,7 @@
                                     <option value="11">November</option>
                                     <option value="12">December</option>
                                 </select>
-                                <select id="educationEndYearField2" name="education_end_year_2" class="form-control" required>
+                                <label for="educationEndYearField2"></label><select id="educationEndYearField2" name="education_end_year_2" class="form-control" required>
                                     <option value="">Year</option>
                                 </select>
                             </div>
@@ -322,41 +355,7 @@
     </div>
 </form>
 
-<script>
-    document.getElementById("docForm").addEventListener("submit", function(event) {
-        var email = document.getElementById("emailField").value;
-        var emailError = document.getElementById("emailError");
-        var phoneNumber = document.getElementById("phoneNumberField").value;
-
-        var validDomains = ["gmail.com", "outlook.com", "yahoo.com", "rediff.com", "inbox.com", "icloud.com", "mail.com", "email.com"];
-        var valid = validDomains.some(function(domain) {
-            return email.endsWith("@" + domain);
-        });
-
-        // Reset previous error messages
-        emailError.textContent = "";
-        document.getElementById("phoneNumberError").textContent = "";
-
-        if (!valid) {
-            emailError.textContent = "Please enter a valid email address";
-            event.preventDefault();
-            // Scroll to email field
-            document.getElementById("emailField").scrollIntoView({ behavior: 'smooth', block: 'center' });
-            // Focus on email field
-            document.getElementById("emailField").focus();
-        }
-
-        if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
-            document.getElementById("phoneNumberError").textContent = "Please enter a valid 10-digit phone number.";
-            event.preventDefault();
-            // Scroll to phone number field
-            document.getElementById("phoneNumberField").scrollIntoView({ behavior: 'smooth', block: 'center' });
-            // Focus on phone number field
-            document.getElementById("phoneNumberField").focus();
-        }
-    });
-</script>
-
+<div id="preview_content"></div>
 <script src="js/script.js"></script>
 </body>
 </html>
