@@ -42,13 +42,13 @@
         }
 
         h2 {
-            color: #007bff; /* Blue color for the heading */
-            font-size: 28px; /* Larger font size */
-            font-weight: bold; /* Bold font weight */
-            text-transform: uppercase; /* Convert text to uppercase */
-            margin-bottom: 20px; /* Add some bottom margin for spacing */
-            border-bottom: 2px solid #007bff; /* Add an underline effect */
-            padding-bottom: 5px; /* Adjust padding for the underline effect */
+            color: #007bff;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
         }
 
 
@@ -143,6 +143,27 @@
             box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
         }
 
+        .timer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+        }
+
+        .timer > div {
+            flex: 0 0 auto;
+            margin-bottom: 10px;
+        }
+
+        .light-text {
+            color: #999;
+            word-break: break-word;
+            overflow-y: auto;
+            flex: 1;
+            margin-right: 10px;
+        }
+
         .form-group textarea {
             margin-top: 5px;
         }
@@ -150,7 +171,9 @@
     </style>
 </head>
 <body>
-<h2 class="text-center my-2">CV Builder </h2>
+<h2 class="text-center my-2">CV Builder</h2>
+<a href="/sample" target="_blank">Load Sample HTML</a>
+
 <form id="docForm" action="/generateDocx" method="post">
     <div class="container">
         <div class="row">
@@ -208,7 +231,11 @@
                 <hr>
                 <div class="education-section">
                     <div class="timer">
-                        <label for="educationField" style="padding: 0">Education<span class="required"></span>:</label><br>
+                        <label for="educationField" style="padding: 0">Education<span class="required"></span>
+                            <span class="light-text">
+                                how to enter details
+                            </span>
+                        </label><br>
                         <div class="form-group">
                             <label>Started:</label><br>
                             <div class="d-flex">

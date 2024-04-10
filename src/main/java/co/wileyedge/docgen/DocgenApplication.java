@@ -5,19 +5,22 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
@@ -114,14 +117,12 @@ public class DocgenApplication {
 
 			System.out.println("New document created successfully: " + newDocumentPath);
 
-			// Set the generated document's path
 			this.documentPath = newDocumentPath.toString();
 			this.name = name;
 			this.mail = email;
 
 		} catch (IOException e) {
 			System.err.println("Error creating document: " + e.getMessage());
-			// Redirect to form page with an error message
 			return "redirect:/";
 		}
 		if (action.equals("Download")) {
@@ -199,6 +200,24 @@ public class DocgenApplication {
 			}
 		}
 	}
+
+	@GetMapping("/sample")
+	public ResponseEntity<Resource> getSampleHtml() {
+		try {
+			// Load the content of sample.html
+			Resource resource = new ClassPathResource("templates/sample.html");
+			if (!resource.exists()) {
+				throw new FileNotFoundException("Sample HTML file not found");
+			}
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.TEXT_HTML);
+			return ResponseEntity.ok().headers(headers).body(resource);
+		} catch (IOException e) {
+			System.err.println("Error reading sample.html: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(DocgenApplication.class, args);
