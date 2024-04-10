@@ -21,7 +21,7 @@
             border: 1px solid #ddd;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             position: fixed;
-            top: 80px;
+            top: 150px;
             right: 30px;
             z-index: 1000;
             width: 45%;
@@ -42,13 +42,13 @@
         }
 
         h2 {
-            color: #007bff;
-            font-size: 28px;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 5px;
+            color: #007bff; /* Blue color for the heading */
+            font-size: 28px; /* Larger font size */
+            font-weight: bold; /* Bold font weight */
+            text-transform: uppercase; /* Convert text to uppercase */
+            margin-bottom: 20px; /* Add some bottom margin for spacing */
+            border-bottom: 2px solid #007bff; /* Add an underline effect */
+            padding-bottom: 5px; /* Adjust padding for the underline effect */
         }
 
 
@@ -143,36 +143,29 @@
             box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
         }
 
-        .timer {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0;
-        }
-
-        .timer > div {
-            flex: 0 0 auto;
-            margin-bottom: 10px;
-        }
-
-        .light-text {
-            color: #999;
-            word-break: break-word;
-            overflow-y: auto;
-            flex: 1;
-            margin-right: 10px;
-        }
-
         .form-group textarea {
             margin-top: 5px;
         }
+
+        #previewButton {
+            position: absolute; /* Set the position to fixed so it stays in place */
+            top: 10px; /* Adjust top position */
+            right: 20px;
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none; /* Remove underline from link */
+            border-radius: 4px;
+            z-index: 999; /* Ensure it's above other elements */
+        }
+
 
     </style>
 </head>
 <body>
 <h2 class="text-center my-2">CV Builder</h2>
-<a href="/sample" target="_blank">Load Sample HTML</a>
+<a  id="previewButton" href="https://drive.google.com/file/d/11KsBsMiyOBv0M7KfKZms0c8kpdtkGOB-/view?usp=sharing">Resume Preview</a>
+
 
 <form id="docForm" action="/generateDocx" method="post">
     <div class="container">
@@ -231,32 +224,28 @@
                 <hr>
                 <div class="education-section">
                     <div class="timer">
-                        <label for="educationField" style="padding: 0">Education<span class="required"></span>
-                            <span class="light-text">
-                                how to enter details
-                            </span>
-                        </label><br>
+                        <label for="educationField" style="padding: 0">Education<span class="required"></span>:</label><br>
                         <div class="form-group">
                             <label>Started:</label><br>
                             <div class="d-flex">
                                 <label for="educationStartMonthField"></label><select id="educationStartMonthField" name="education_start_month" class="form-control me-2" required>
-                                    <option value="">Month</option>
-                                    <option value="01">January</option>
-                                    <option value="02">February</option>
-                                    <option value="03">March</option>
-                                    <option value="04">April</option>
-                                    <option value="05">May</option>
-                                    <option value="06">June</option>
-                                    <option value="07">July</option>
-                                    <option value="08">August</option>
-                                    <option value="09">September</option>
-                                    <option value="10">October</option>
-                                    <option value="11">November</option>
-                                    <option value="12">December</option>
-                                </select>
+                                <option value="">Month</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
                                 <label for="educationStart"></label><select id="educationStart" name="educationStart" class="form-control" required>
-                                    <option value="">Year</option>
-                                </select>
+                                <option value="">Year</option>
+                            </select>
                             </div>
                         </div>
 
@@ -264,22 +253,22 @@
                             <label>Ended:</label><br>
                             <div class="d-flex">
                                 <label for="educationEndMonthField"></label><select id="educationEndMonthField" name="education_end_month" class="form-control me-2" required>                                <option value="">Month</option>
-                                    <option value="01">January</option>
-                                    <option value="02">February</option>
-                                    <option value="03">March</option>
-                                    <option value="04">April</option>
-                                    <option value="05">May</option>
-                                    <option value="06">June</option>
-                                    <option value="07">July</option>
-                                    <option value="08">August</option>
-                                    <option value="09">September</option>
-                                    <option value="10">October</option>
-                                    <option value="11">November</option>
-                                    <option value="12">December</option>
-                                </select>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
                                 <label for="educationEndYearField"></label><select id="educationEndYearField" name="education_end_year" class="form-control" required>
-                                    <option value="">Year</option>
-                                </select>
+                                <option value="">Year</option>
+                            </select>
                             </div>
                         </div>
                     </div>
@@ -293,23 +282,23 @@
                             <label>Started:</label><br>
                             <div class="d-flex">
                                 <label for="educationStartMonthField2"></label><select id="educationStartMonthField2" name="education_start_month_2" class="form-control me-2" required>
-                                    <option value="">Month</option>
-                                    <option value="01">January</option>
-                                    <option value="02">February</option>
-                                    <option value="03">March</option>
-                                    <option value="04">April</option>
-                                    <option value="05">May</option>
-                                    <option value="06">June</option>
-                                    <option value="07">July</option>
-                                    <option value="08">August</option>
-                                    <option value="09">September</option>
-                                    <option value="10">October</option>
-                                    <option value="11">November</option>
-                                    <option value="12">December</option>
-                                </select>
+                                <option value="">Month</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
                                 <label for="educationStart2"></label><select id="educationStart2" name="educationStart2" class="form-control me-2" required>
-                                    <option value="">Year</option>
-                                </select>
+                                <option value="">Year</option>
+                            </select>
                             </div>
                         </div>
 
@@ -317,23 +306,23 @@
                             <label>Ended:</label><br>
                             <div class="d-flex">
                                 <label for="educationEndMonthField2"></label><select id="educationEndMonthField2" name="education_end_month_2" class="form-control me-2" required>
-                                    <option value="">Month</option>
-                                    <option value="01">January</option>
-                                    <option value="02">February</option>
-                                    <option value="03">March</option>
-                                    <option value="04">April</option>
-                                    <option value="05">May</option>
-                                    <option value="06">June</option>
-                                    <option value="07">July</option>
-                                    <option value="08">August</option>
-                                    <option value="09">September</option>
-                                    <option value="10">October</option>
-                                    <option value="11">November</option>
-                                    <option value="12">December</option>
-                                </select>
+                                <option value="">Month</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
                                 <label for="educationEndYearField2"></label><select id="educationEndYearField2" name="education_end_year_2" class="form-control" required>
-                                    <option value="">Year</option>
-                                </select>
+                                <option value="">Year</option>
+                            </select>
                             </div>
                         </div>
                     </div>
